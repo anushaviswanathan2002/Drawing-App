@@ -48,12 +48,9 @@ button {
   font-size: 0.9rem;
   cursor: pointer;
 }
-button:hover:not(:disabled) { background: #4338ca; }
-button:disabled { opacity: 0.45; cursor: not-allowed; }
+button:hover { background: #4338ca; }
 button.secondary { background: #6b7280; }
-button.secondary:hover:not(:disabled) { background: #4b5563; }
-button.success { background: #10b981; }
-button.success:hover:not(:disabled) { background: #059669; }
+button.secondary:hover { background: #4b5563; }
 canvas {
   background: #fff;
   border: 1px solid #d1d5db;

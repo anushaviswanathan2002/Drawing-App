@@ -6,8 +6,6 @@ A basic drawing app built with **React + Vite** (HTML5 Canvas).
 - Freehand drawing with mouse or touch
 - Color picker and brush size slider
 - Clear canvas button
-- **Undo last stroke (up to 20 strokes)**
-- **Download drawing as PNG**
 
 ## Stack
 - React 18
