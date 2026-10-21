@@ -8,6 +8,7 @@ export default function App() {
 
   const [color, setColor] = useState('#4f46e5');
   const [size, setSize] = useState(4);
+  const [filename, setFilename] = useState('drawing');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -59,6 +60,19 @@ export default function App() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   }
 
+  function downloadPng() {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const safeName = (filename.trim() || 'drawing').replace(/[^a-z0-9_\-]/gi, '_');
+    const url = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safeName}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
   return (
     <div>
       <h1>🎨 Drawing App</h1>
@@ -84,6 +98,16 @@ export default function App() {
         <button className="secondary" onClick={clearCanvas}>
           Clear
         </button>
+        <label className="filename">
+          Filename
+          <input
+            type="text"
+            value={filename}
+            onChange={(e) => setFilename(e.target.value)}
+            placeholder="drawing"
+          />
+        </label>
+        <button onClick={downloadPng}>⬇ Download PNG</button>
       </div>
       <canvas
         ref={canvasRef}

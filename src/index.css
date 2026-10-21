@@ -39,6 +39,14 @@ h1 { margin: 0 0 0.75rem; }
   cursor: pointer;
 }
 .toolbar input[type="range"] { width: 100px; }
+.toolbar .filename { gap: 0.3rem; }
+.toolbar .filename input[type="text"] {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  width: 140px;
+}
 button {
   padding: 0.5rem 0.9rem;
   border: none;
