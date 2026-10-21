@@ -8,6 +8,9 @@ export default function App() {
 
   const [color, setColor] = useState('#4f46e5');
   const [size, setSize] = useState(4);
+  const [canUndo, setCanUndo] = useState(false);
+
+  const history = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -30,8 +33,12 @@ export default function App() {
 
   function start(e) {
     e.preventDefault();
+    const ctx = ctxRef.current;
+    const canvas = canvasRef.current;
+    history.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
     drawing.current = true;
     last.current = pointerPos(e);
+    setCanUndo(true);
   }
 
   function move(e) {
@@ -55,8 +62,19 @@ export default function App() {
   function clearCanvas() {
     const canvas = canvasRef.current;
     const ctx = ctxRef.current;
+    history.current.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+    setCanUndo(true);
+  }
+
+  function undo() {
+    const ctx = ctxRef.current;
+    const canvas = canvasRef.current;
+    if (history.current.length === 0) return;
+    const previous = history.current.pop();
+    ctx.putImageData(previous, 0, 0);
+    setCanUndo(history.current.length > 0);
   }
 
   return (
@@ -81,6 +99,9 @@ export default function App() {
             onChange={(e) => setSize(Number(e.target.value))}
           />
         </label>
+        <button onClick={undo} disabled={!canUndo}>
+          ↶ Undo
+        </button>
         <button className="secondary" onClick={clearCanvas}>
           Clear
         </button>

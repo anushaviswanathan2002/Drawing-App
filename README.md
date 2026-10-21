@@ -5,6 +5,7 @@ A basic drawing app built with **React + Vite** (HTML5 Canvas).
 **Features:**
 - Freehand drawing with mouse or touch
 - Color picker and brush size slider
+- Undo button (reverts the most recent stroke)
 - Clear canvas button
 
 ## Stack
