@@ -1,5 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
 
+const THEME_KEY = 'drawing-theme';
+
+function loadTheme() {
+  return localStorage.getItem(THEME_KEY) === 'dark';
+}
+
 export default function App() {
   const canvasRef = useRef(null);
   const ctxRef = useRef(null);
@@ -8,6 +14,7 @@ export default function App() {
 
   const [color, setColor] = useState('#4f46e5');
   const [size, setSize] = useState(4);
+  const [dark, setDark] = useState(loadTheme);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -20,6 +27,11 @@ export default function App() {
     ctx.lineJoin = 'round';
     ctxRef.current = ctx;
   }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', dark);
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light');
+  }, [dark]);
 
   function pointerPos(e) {
     const rect = canvasRef.current.getBoundingClientRect();
@@ -61,7 +73,16 @@ export default function App() {
 
   return (
     <div>
-      <h1>🎨 Drawing App</h1>
+      <div className="header-row">
+        <h1>🎨 Drawing App</h1>
+        <button
+          className="theme-toggle"
+          onClick={() => setDark((d) => !d)}
+          aria-label="Toggle dark mode"
+        >
+          {dark ? '☀️' : '🌙'}
+        </button>
+      </div>
       <div className="toolbar">
         <label>
           Color
